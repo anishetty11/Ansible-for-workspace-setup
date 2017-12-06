@@ -1,0 +1,36 @@
+- name: "Installing Virtualization related softwares"
+  apt: pkg={{ item }} state=installed
+  with_items:
+  - docker.io
+  - virtualbox
+  - vagrant
+
+- name: "Create a directory to save Dockerfile"
+  file:
+    path: /home/sois/Desktop/docker/
+    state: directory
+    mode: 0777
+
+- name: "Copying the dockerfile to setup apache server"
+  copy: src=/home/sois/Desktop/ansible/mydemo/configfiles/Dockerfile dest=/home/sois/Desktop/docker/Dockerfile owner=root group=root mode=0666
+
+- name: "Create the docker image"
+  docker_image:
+    name: apache_by_ansible
+    tag: latest
+    path: /home/sois/Desktop/docker/
+    state: present
+
+- name: "Create the apache container from docker image @port 7000"
+  docker_container:
+    name: web_server
+    image: "apache_by_ansible:latest"
+    state: started
+    ports: 
+    - "7000:80"
+
+
+
+
+
+
