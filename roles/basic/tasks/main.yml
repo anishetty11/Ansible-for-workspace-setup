@@ -31,10 +31,19 @@
   copy: src=/home/sois/Desktop/ansible/mydemo/configfiles/Dockerfile dest=/home/sois/Desktop/docker/Dockerfile owner=root group=root mode=0666
 
 - name: "Create the docker image"
-  shell: docker build -t "apache:latest" /home/sois/Desktop/docker/
+  docker_image:
+    name: apache_by_ansible
+    tag: latest
+    path: /home/sois/Desktop/docker/
+    state: present
 
 - name: "Create the container from docker image"
-  shell: docker run -it -d -p 5000:80 apache
+  docker_container:
+    name: web_server
+    image: "apache_by_ansible:latest"
+    state: started
+    ports: 
+    - "7000:80"
 
 
 
