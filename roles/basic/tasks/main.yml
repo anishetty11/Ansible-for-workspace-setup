@@ -1,0 +1,43 @@
+- name: "Installing basic softwares"
+  apt: pkg={{ item }} state=installed
+  with_items:
+  - git
+  - vim
+  - docker.io
+  - virtualbox
+  - vagrant
+  - python3
+  - python3-pip
+  - sublime-text
+
+- name: "Setting up proxy"
+  copy: src=/etc/apt/apt.conf dest=/etc/apt/apt.conf owner=root group=root mode=0644
+
+- name: "Set up proxy for Dockers"
+  copy: src=/home/sois/Desktop/ansible/mydemo/configfiles/docker dest=/etc/default/docker owner=root group=root mode=0666
+
+- name: "Restart the docker service"
+  service:
+    name: docker
+    state: restarted
+
+- name: "Create a directory to save Dockerfile"
+  file:
+    path: /home/sois/Desktop/docker/
+    state: directory
+    mode: 0777
+
+- name: "Copying the dockerfile to setup apache server"
+  copy: src=/home/sois/Desktop/ansible/mydemo/configfiles/Dockerfile dest=/home/sois/Desktop/docker/Dockerfile owner=root group=root mode=0666
+
+- name: "Create the docker image"
+  shell: docker build -t "apache:latest" /home/sois/Desktop/docker/
+
+- name: "Create the container from docker image"
+  shell: docker run -it -d -p 5000:80 apache
+
+
+
+
+
+
