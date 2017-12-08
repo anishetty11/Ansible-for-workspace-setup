@@ -1,4 +1,9 @@
-- hosts: all
+- hosts: generic
   become: true
   roles:
   - basic
+
+- hosts: virtualization
+  become: true
+  roles:
+  - virtualiztion

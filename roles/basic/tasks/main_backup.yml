@@ -2,13 +2,10 @@
   apt: pkg={{ item }} state=installed
   with_items:
   - git
-  - midori
-  - nmap
   - vim
   - python3
   - python3-pip
   - sublime-text
-  - virtualbox
 
 - name: "Setting up proxy"
   copy: src=/etc/apt/apt.conf dest=/etc/apt/apt.conf owner=root group=root mode=0644
