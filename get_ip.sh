@@ -35,7 +35,7 @@ read passwd
 echo "These hosts have been ignored" | cat > ignored_hosts
 
 # for each ip in that network, try to copy the ssh authentication key
-for i in {145..255}
+for i in {85..255}
 do
 	
 	temp_ip="$ip$i"
@@ -51,7 +51,7 @@ do
 				cat hosts | grep $temp_ip > /dev/null
 
 				# if not present, then add it to hosts list
-				if [[ $? -ne 0 ]]
+				if [[ $? -eq 0 ]]
 					then
 					echo "Added $temp_ip to the hosts list"
 					echo $temp_ip | cat >> hosts

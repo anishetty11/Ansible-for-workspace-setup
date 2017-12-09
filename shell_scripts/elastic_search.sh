@@ -17,3 +17,4 @@ sudo update-rc.d elasticsearch defaults 95 10
  
 ### Start ElasticSearch 
 sudo /etc/init.d/elasticsearch start
+return 0

@@ -35,12 +35,13 @@ do
 		# if not present, add it to the main.yml file
 		if [[ $? -ne 0 ]]
 			then
-				awk -v i="  - $i" '{print $0;if(NR==11){print i}}' roles/basic/tasks/main.yml > temp.txt
+				#awk -v i="  - $i" '{print $0;if(NR==11){print i}}' roles/basic/tasks/main.yml > temp.txt
+				awk -v i="  - $i" '{print $0;if($1=="with_items:"){print i}}' roles/basic/tasks/main.yml > temp.txt
 				echo " Package $i has been added to main.yml"
 				cp temp.txt roles/basic/tasks/main.yml
 			# if already present, ignore
 			else
-				echo " Package $i already present in the main.yml"
+				echo " Package $i already present in the main.yml" 2>/dev/null
 			fi
 		fi
 		echo
