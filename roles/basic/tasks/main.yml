@@ -24,8 +24,8 @@
   - vim
   - python3
   - python3-pip
-#  - sublime-text
-#  - virtualbox
+  - sublime-text
+  - virtualbox
   - docker.io
 
 - name: "Create a directory to save the shell scripts"
@@ -69,6 +69,15 @@
     tag: latest
     path: ~/Desktop/docker/
     state: present
+
+
+- name: "Create the apache container from docker image @port 7000"
+  docker_container:
+    name: web_server
+    image: "apache_by_ansible:latest"
+    state: started
+    ports: 
+- "7000:80"
 
 
 

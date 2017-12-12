@@ -14,7 +14,3 @@
 # If using under a proxy server, uncomment the below lines, and modify the proxy server
 # address and port number
 
-http_proxy="http://172.16.19.10:80";
-https_proxy="https://172.16.19.10:80";
-http_proxy="http://172.16.19.10:80";
-https_proxy="https://172.16.19.10:80";
