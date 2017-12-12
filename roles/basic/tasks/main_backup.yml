@@ -1,0 +1,26 @@
+- name: "Installing basic softwares"
+  apt: pkg={{ item }} state=installed
+  with_items:
+  - git
+  - vim
+  - python3
+  - python3-pip
+  - sublime-text
+
+- name: "Setting up proxy"
+  copy: src=/etc/apt/apt.conf dest=/etc/apt/apt.conf owner=root group=root mode=0644
+
+- name: "Set up proxy for Dockers"
+  copy: src=/home/sois/Desktop/ansible/mydemo/configfiles/docker dest=/etc/default/docker owner=root group=root mode=0666
+
+- name: "Restart the docker service"
+  service:
+    name: docker
+    state: restarted
+
+
+
+
+
+
+
