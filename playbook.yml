@@ -1,0 +1,5 @@
+- hosts: generic
+  become: true
+  roles:
+  - basic
+

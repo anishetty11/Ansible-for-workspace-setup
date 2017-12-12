@@ -1,0 +1,81 @@
+- name: "Clearing up apt cache (workaround for a bug in ansible)"
+  shell:  rm -r /var/lib/apt/lists/ |  return 0
+
+
+- name: "Setting up proxy"
+  copy: src=~/Desktop/ansible/configfiles/apt.conf dest=/etc/apt/apt.conf owner=root group=root mode=0644
+
+
+- name: "Update apt-get cache"
+  shell: apt-get update
+
+
+- name: "Installing basic softwares"
+  apt: pkg={{ item }} state=installed
+  with_items:
+  - gedit
+  - git
+  - aptitude
+  - unzip
+  - vagrant
+  - python-pip
+  - midori
+  - nmap
+  - vim
+  - python3
+  - python3-pip
+#  - sublime-text
+#  - virtualbox
+  - docker.io
+
+- name: "Create a directory to save the shell scripts"
+  file:
+    path: ~/Desktop/shell_scripts/
+    state: directory
+    mode: 0777
+
+- name: "Copying the shell scripts"
+  copy: src=~/Desktop/ansible/mydemo/shell_scripts/ dest=~/Desktop/shell_scripts/ owner=root group=root mode=0644
+
+- name: "Executing the shell scripts"
+  shell: bash ~/Desktop/shell_scripts/execute_scripts.sh
+
+- name: "Set up proxy for Dockers"
+  copy: src=~/Desktop/ansible/mydemo/configfiles/docker dest=/etc/default/docker owner=root group=root mode=0666
+
+- name: "Restart the docker service"
+  service:
+    name: docker
+    state: restarted
+    
+- name: "Create a directory to save Dockerfile"
+  file:
+    path: ~/Desktop/docker/
+    state: directory
+    mode: 0777
+
+- name: "Copying the dockerfile to setup apache server"
+  copy: src=~/Desktop/ansible/mydemo/configfiles/Dockerfile dest=~/Desktop/docker/Dockerfile owner=root group=root mode=0666
+
+
+- name: "Install dependencies for docker"
+  pip:
+    name: docker-py
+
+
+- name: "Create the docker image"
+  docker_image:
+    name: apache_by_ansible
+    tag: latest
+    path: ~/Desktop/docker/
+    state: present
+
+
+
+
+
+
+
+
+
+

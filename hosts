@@ -1,0 +1,5 @@
+# This is the default ansible 'hosts' file.
+
+[generic]
+
+172.16.51.68
